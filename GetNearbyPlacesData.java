@@ -1,8 +1,9 @@
-package com.androidtutorialpoint.googlemapsnearbyplaces;
+package com.wahdat.googlemapsnearbyplaces;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.wahdat.googlemapsnearbyplaces.DownloadUrl;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -83,7 +84,7 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
             markerOptions.position(latLng);
             markerOptions.title(placeName + " : " + vicinity);
             markerOptions.snippet(status);
-            mMap.addMarker(markerOptions);
+            //mMap.addMarker(markerOptions);
             if (status.equals(new String("Not-visited"))) {
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
             } else if (status.equals(new String("Visited"))) {
@@ -94,6 +95,7 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
 
             //markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
             //move map camera
+            mMap.addMarker(markerOptions);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
         }
@@ -106,7 +108,7 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
             HashMap<LatLng, String> locstatus = markerStatus.get(i);
             Set<LatLng> keys = locstatus.keySet();
             for (LatLng eachkey : keys) {
-                locstatus.put(eachkey, "In-process" );
+                locstatus.put(eachkey, "Visited" );
             }
         }
 

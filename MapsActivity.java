@@ -1,10 +1,11 @@
-package com.androidtutorialpoint.googlemapsnearbyplaces;
+package com.wahdat.googlemapsnearbyplaces;
 
-import com.androidtutorialpoint.googlemapsnearbyplaces.R;
+import com.wahdat.googlemapsnearbyplaces.R;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -13,10 +14,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +41,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.HashMap;
 import java.util.List;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
@@ -76,9 +79,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         final TextView targetTextView = (TextView) findViewById(R.id.targetID);
-        targetTextView.setText(R.string.targetex);
         final TextView currentTextView = (TextView) findViewById(R.id.currentID);
-        currentTextView.setText(R.string.currentex);
+        Resources res = getResources();
+        String tgtamnt = "$tgtamt";
+        String crtamnt = "$crtamt";
+        String targettext = String.format(res.getString(R.string.targetex), tgtamnt);
+        String currenttext = String.format(res.getString(R.string.currentex), crtamnt);
+        targetTextView.setText(targettext);
+
+        currentTextView.setText(currenttext);
 
         Button btnCheckin = (Button) findViewById(R.id.btn_checkin);
         btnCheckin.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +104,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Log.d("onClick", url);
                 GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
                 getNearbyPlacesData.execute(DataTransfer);
-                Toast.makeText(MapsActivity.this, "Nearby Restaurants", Toast.LENGTH_LONG).show();
+                Toast.makeText(MapsActivity.this, "Nearby Restaurants & locality", Toast.LENGTH_LONG).show();
             }
         });
 
